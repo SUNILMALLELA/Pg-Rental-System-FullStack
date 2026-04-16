@@ -1,6 +1,7 @@
 package com.example.Backend.service;
 
 import com.example.Backend.entity.Register;
+import com.example.Backend.entity.Role;
 import com.example.Backend.exception.CustomException;
 import com.example.Backend.model.RegisterRequest;
 import com.example.Backend.repository.RegisterRepository;
@@ -27,7 +28,7 @@ public class RegisterService {
                 .email(registerRequest.getEmail())
                 .password(bCryptPasswordEncoder.encode(registerRequest.getPassword()))
                 .phoneNumber(registerRequest.getPhoneNumber())
-                .role("USER")
+                .role(Role.valueOf(registerRequest.getRole()))
                 .build();
         Register result =  registerRepository.save(register);
          return "User Register Successfully"  ;

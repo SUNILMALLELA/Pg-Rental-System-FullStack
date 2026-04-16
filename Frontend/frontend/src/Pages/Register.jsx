@@ -8,10 +8,11 @@ function Register() {
     email: "",
     password: "",
     phoneNumber: "",
+    role: "USER",
   });
 
   const navigate = useNavigate();
-  
+
 
   const [message, setMessage] = useState("");
 
@@ -113,6 +114,32 @@ function Register() {
             required
             style={inputStyle}
           />
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            style={{
+              width: "100%",
+              padding: "10px 40px 10px 10px",
+              marginBottom: "15px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              outline: "none",
+              fontSize: "14px",
+              appearance: "none",
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              backgroundColor: "#fff",
+              backgroundImage: `url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right 10px center",
+              backgroundSize: "16px",
+              cursor: "pointer"
+            }}
+          >
+            <option value="USER">User</option>
+            <option value="OWNER">Owner</option>
+          </select>
           <button type="submit" style={buttonStyle}>
             Register
           </button>
@@ -142,6 +169,8 @@ const inputStyle = {
   border: "1px solid #ccc",
   outline: "none",
   fontSize: "14px",
+  height: "40px",
+  boxSizing: "border-box"
 };
 const buttonStyle = {
   width: "100%",

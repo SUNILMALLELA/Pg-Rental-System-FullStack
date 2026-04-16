@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PropertiesComponent">{}</component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6bcb66de-5568-4287-b48f-24563a6ff40b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/controller/PgController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/GenderPreference.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Pg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/model/PgRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/model/PgResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/repository/PgRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/PgService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/controller/HomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/RegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/Pages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/Pages/Register.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="3COimQj9vTSAjS2ZBpsDWDlYXoe" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.BackendApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\manju\Desktop\FullStack\Frontend" />
+      <recent name="C:\Users\manju\Desktop\FullStack\Backend" />
+      <recent name="C:\Users\manju\Desktop\FullStack\Backend\Backend" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.Backend.model" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
@@ -21,5 +99,22 @@
         <item itemvalue="Spring Boot.BackendApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6bcb66de-5568-4287-b48f-24563a6ff40b" name="Changes" comment="" />
+      <created>1776263180001</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1776263180001</updated>
+    </task>
+    <servers />
   </component>
 </project>

@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "register")
+@Table(name = "users")
 public class Register {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +22,6 @@ public class Register {
     private String email;
     private String password;
     private String phoneNumber;
-    private String role;
-
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
