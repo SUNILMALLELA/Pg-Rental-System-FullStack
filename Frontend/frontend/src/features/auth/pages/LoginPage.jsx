@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { loginUser } from "../authService";
-import Image from "../../../assets/logo3.png";
 import { useNavigate } from "react-router-dom";
+import AuthLayout from "../components/AuthLayout";
 
-function Login() {
+function LoginPage() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,37 +24,26 @@ function Login() {
     try {
       const response = await loginUser(formData);
       setMessage(response.data.message);
-      if(response.data.token){
-      localStorage.setItem("token", response.data.token);
+
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
       }
-      setFormData({
-        email: "",
-        password: "",
-      });
-        navigate("/home")
+
+      setFormData({ email: "", password: "" });
+      navigate("/home");
     } catch (error) {
       const errorMsg =
         typeof error.response?.data === "string"
           ? error.response.data
           : error.response?.data?.message || "Error In API";
-          localStorage.removeItem('token')
+
+      localStorage.removeItem("token");
       setMessage(errorMsg);
     }
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        backgroundImage: `url(${Image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        paddingLeft: "80px",
-      }}
-    >
+    <AuthLayout>
       <div
         style={{
           width: "350px",
@@ -64,7 +53,7 @@ function Login() {
           backdropFilter: "blur(10px)",
           boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
           marginLeft: "-70px",
-           marginBottom:"60px"
+          marginBottom: "60px",
         }}
       >
         <h2 style={{ marginBottom: "20px", color: "#333" }}>
@@ -79,7 +68,15 @@ function Login() {
             value={formData.email}
             onChange={handleChange}
             required
-            style={inputStyle}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "15px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              outline: "none",
+              fontSize: "14px",
+            }}
           />
 
           <input
@@ -89,10 +86,30 @@ function Login() {
             value={formData.password}
             onChange={handleChange}
             required
-            style={inputStyle}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "15px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              outline: "none",
+              fontSize: "14px",
+            }}
           />
 
-          <button type="submit" style={buttonStyle}> 
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#2f5d62",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "16px",
+            }}
+          >
             Login
           </button>
         </form>
@@ -105,53 +122,26 @@ function Login() {
             fontSize: "14px",
           }}
         >
-          
           <span
             style={{
               color: "#2f5d62",
               fontWeight: "bold",
               cursor: "pointer",
-              marginRight:"-240px"
+              marginRight: "-240px",
             }}
           >
             Forgot Password?
           </span>
         </p>
 
-        <p
-          style={{
-            marginTop: "15px",
-            color: "red",
-            textAlign: "center",
-          }}
-        >
+        <p style={{ marginTop: "15px", color: "red", textAlign: "center" }}>
           {typeof message === "string"
             ? message
             : JSON.stringify(message)}
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
-const inputStyle = {
-  width: "100%",
-  padding: "10px",
-  marginBottom: "15px",
-  borderRadius: "5px",
-  border: "1px solid #ccc",
-  outline: "none",
-  fontSize: "14px",
-};
 
-const buttonStyle = {
-  width: "100%",
-  padding: "10px",
-  background: "#2f5d62",
-  color: "white",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-  fontSize: "16px",
-};
-
-export default Login;
+export default LoginPage;
