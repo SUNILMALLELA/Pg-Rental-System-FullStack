@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { registerUser } from "../services/Register";
-import Image from '../assets/logo3.png'
+import { registerUser } from "../authService";
+import Image from "../../../assets/logo3.png";
 import { useNavigate } from "react-router-dom";
 function Register() {
   const [formData, setFormData] = useState({

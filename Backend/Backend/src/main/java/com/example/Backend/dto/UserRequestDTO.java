@@ -1,4 +1,4 @@
-package com.example.Backend.model;
+package com.example.Backend.dto;
 
 
 import jakarta.persistence.Column;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class UserRequestDTO {
     private String fullName;
     @Column(unique = true)
     private String email;

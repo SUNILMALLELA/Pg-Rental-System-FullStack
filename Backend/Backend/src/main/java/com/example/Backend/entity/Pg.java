@@ -26,6 +26,6 @@ public class Pg {
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "owner_id",nullable = false)
-    private Register owner;
+    private User owner;
 
 }

@@ -1,6 +1,5 @@
-package com.example.Backend.Filter;
+package com.example.Backend.security;
 
-import com.example.Backend.Config.JWTUtil;
 import com.example.Backend.service.LoginService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

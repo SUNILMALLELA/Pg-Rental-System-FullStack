@@ -1,7 +1,7 @@
 package com.example.Backend.controller;
 
-import com.example.Backend.model.PgRequestDTO;
-import com.example.Backend.model.PgResponseDTO;
+import com.example.Backend.dto.PgRequestDTO;
+import com.example.Backend.dto.PgResponseDTO;
 import com.example.Backend.service.PgService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

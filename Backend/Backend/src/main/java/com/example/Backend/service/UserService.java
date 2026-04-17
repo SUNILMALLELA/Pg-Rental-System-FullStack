@@ -1,36 +1,36 @@
 package com.example.Backend.service;
 
-import com.example.Backend.entity.Register;
+import com.example.Backend.entity.User;
 import com.example.Backend.entity.Role;
 import com.example.Backend.exception.CustomException;
-import com.example.Backend.model.RegisterRequest;
-import com.example.Backend.repository.RegisterRepository;
+import com.example.Backend.dto.UserRequestDTO;
+import com.example.Backend.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegisterService {
+public class UserService {
 
-    private final RegisterRepository registerRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public RegisterService(RegisterRepository registerRepository,BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.registerRepository = registerRepository;
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public String register(RegisterRequest registerRequest) {
-        if(registerRepository.existsByEmail(registerRequest.getEmail())){
+    public String register(UserRequestDTO registerRequest) {
+        if(userRepository.existsByEmail(registerRequest.getEmail())){
            throw new CustomException("Email already exists",400);
         }
-        Register register = Register.builder()
+        User user = User.builder()
                 .fullName(registerRequest.getFullName())
                 .email(registerRequest.getEmail())
                 .password(bCryptPasswordEncoder.encode(registerRequest.getPassword()))
                 .phoneNumber(registerRequest.getPhoneNumber())
                 .role(Role.valueOf(registerRequest.getRole()))
                 .build();
-        Register result =  registerRepository.save(register);
+        User result =  userRepository.save(user);
          return "User Register Successfully"  ;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.Backend.controller;
 
-import com.example.Backend.Config.JWTUtil;
-import com.example.Backend.model.LoginRequest;
+import com.example.Backend.security.JWTUtil;
+import com.example.Backend.dto.LoginRequestDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth/")
-@CrossOrigin(origins = "http://localhost:5173")
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
@@ -22,7 +21,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public Map<String,String> login(@RequestBody LoginRequest loginRequest){
+    public Map<String,String> login(@RequestBody LoginRequestDTO loginRequest){
        authenticationManager.authenticate(
                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
        String token = jwtUtil.generateToken(loginRequest.getEmail());

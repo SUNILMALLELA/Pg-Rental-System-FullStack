@@ -1,4 +1,4 @@
-package com.example.Backend.Config;
+package com.example.Backend.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

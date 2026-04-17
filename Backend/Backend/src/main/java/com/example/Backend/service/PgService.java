@@ -2,13 +2,13 @@ package com.example.Backend.service;
 
 import com.example.Backend.entity.GenderPreference;
 import com.example.Backend.entity.Pg;
-import com.example.Backend.entity.Register;
+import com.example.Backend.entity.User;
 import com.example.Backend.entity.Role;
 import com.example.Backend.exception.CustomException;
-import com.example.Backend.model.PgRequestDTO;
-import com.example.Backend.model.PgResponseDTO;
+import com.example.Backend.dto.PgRequestDTO;
+import com.example.Backend.dto.PgResponseDTO;
 import com.example.Backend.repository.PgRepository;
-import com.example.Backend.repository.RegisterRepository;
+import com.example.Backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -18,11 +18,11 @@ import java.util.List;
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 public class PgService {
-    private final RegisterRepository registerRepository;
+    private final UserRepository userRepository;
     private final PgRepository pgRepository;
     public PgResponseDTO createPg(PgRequestDTO dto) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Register owner = registerRepository.findByEmail(email).orElseThrow(() -> new CustomException("User not found", 403));
+        User owner = userRepository.findByEmail(email).orElseThrow(() -> new CustomException("User not found", 403));
         if (owner.getRole() != Role.OWNER) {
             throw new CustomException("Only owners can add PG", 400);
         }
@@ -49,7 +49,7 @@ public class PgService {
 
     public List<PgResponseDTO> getAllOwnerPgs() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Register owner = registerRepository.findByEmail(email).orElseThrow(()->new CustomException("User not found",400));
+        User owner = userRepository.findByEmail(email).orElseThrow(()->new CustomException("User not found",400));
         if(owner.getRole() != Role.OWNER){
             throw new CustomException("Access denied",403);
         }
@@ -67,7 +67,7 @@ public class PgService {
 
     public PgResponseDTO updatePg(Long id, PgRequestDTO dto) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Register owner = registerRepository.findByEmail(email).orElseThrow(()-> new CustomException("User not found",400));
+        User owner = userRepository.findByEmail(email).orElseThrow(()-> new CustomException("User not found",400));
         Pg pg = pgRepository.findById(id).orElseThrow(()-> new CustomException("Pg  not found",404));
         if (pg.getOwner().getId() != owner.getId()) {
             throw new CustomException("You are not allowed", 403);
@@ -94,7 +94,7 @@ public class PgService {
 
     public String deletePg(Long pgId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Register owner = registerRepository.findByEmail(email).orElseThrow(() -> new CustomException("User not found", 400));
+        User owner = userRepository.findByEmail(email).orElseThrow(() -> new CustomException("User not found", 400));
         Pg pg = pgRepository.findById(pgId).orElseThrow(() -> new CustomException("PG not found", 404));
         if (pg.getOwner().getId() != owner.getId()) {
             throw new CustomException("You are not allowed", 403);

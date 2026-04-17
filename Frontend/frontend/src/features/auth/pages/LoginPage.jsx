@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { loginUser } from "../services/Login";
-import Image from "../assets/logo3.png";
+import { loginUser } from "../authService";
+import Image from "../../../assets/logo3.png";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -24,20 +24,20 @@ function Login() {
     try {
       const response = await loginUser(formData);
       setMessage(response.data.message);
+      if(response.data.token){
       localStorage.setItem("token", response.data.token);
+      }
       setFormData({
         email: "",
         password: "",
       });
-      setTimeout(()=>{
-        navigate("/main")
-      },2000)
+        navigate("/home")
     } catch (error) {
       const errorMsg =
         typeof error.response?.data === "string"
           ? error.response.data
           : error.response?.data?.message || "Error In API";
-
+          localStorage.removeItem('token')
       setMessage(errorMsg);
     }
   };
