@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { loginUser } from "../authService";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
-
+import  {useContext}  from "react";
+import  AuthContext  from "../../../context/AuthContext";
 function LoginPage() {
   const [formData, setFormData] = useState({
     email: "",
@@ -11,6 +12,7 @@ function LoginPage() {
 
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const {login} = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({
@@ -24,9 +26,11 @@ function LoginPage() {
     try {
       const response = await loginUser(formData);
       setMessage(response.data.message);
-
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
+      const token = response.data?.token;
+      console.log("The token data is",token);
+      
+      if (token) {
+       login(token)
       }
 
       setFormData({ email: "", password: "" });
