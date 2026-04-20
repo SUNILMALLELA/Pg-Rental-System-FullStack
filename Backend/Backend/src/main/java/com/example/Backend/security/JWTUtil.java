@@ -10,15 +10,16 @@ import java.util.Date;
 @Component
 public class JWTUtil {
     private final Key key = Keys.hmacShaKeyFor( "welcome-to-springboot-security-jwt-secret-key".getBytes());
-    public String generateToken(String email,String name){
-        return Jwts.builder()
-                .setSubject(email)
-                .claim("name", name) 
-                .setIssuedAt(new Date())
-               .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
-                .signWith(key)
-                .compact();
-    }
+    public String generateToken(String email, String name, String role) {
+    return Jwts.builder()
+            .setSubject(email)
+            .claim("name", name)
+            .claim("role", "ROLE_" + role) 
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
+            .signWith(key)
+            .compact();
+}
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
@@ -36,6 +37,14 @@ public class JWTUtil {
             .parseClaimsJws(token)
             .getBody()
             .get("name", String.class);   
+}
+public String extractUserRole(String token) {
+    return Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .get("role", String.class);   
 }
     public boolean isTokenExpired(String token){
         Date expiry = Jwts.parserBuilder()
