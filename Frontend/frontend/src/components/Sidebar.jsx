@@ -1,150 +1,126 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { C, FONT } from "../theme";
 
-// SideBar.jsx — update the NAV array
-const NAV = [
+const SECTIONS = [
   {
-    section: "Main",
+    label: "Main",
     items: [
-      { label: "Dashboard",      path: "/home/dashboard",        icon: "grid" },
-      { label: "Browse PGs",     path: "/home/browse",           icon: "search", badge: { text: "New", type: "green" } },
-      { label: "My Bookings",    path: "/home/bookings",         icon: "home",   badge: { text: "3",   type: "blue"  } },
-      { label: "Saved PGs",      path: "/home/saved",            icon: "heart" },
+      { key: "dashboard",  label: "Dashboard",        path: "/home/dashboard"    },
+      { key: "browse",     label: "Browse PGs",       path: "/home/browse",      badge: "New",  bc: "#166534", bb: "#dcfce7" },
+      { key: "bookings",   label: "My Bookings",      path: "/home/bookings",    badge: "3",    bc: C.blue600, bb: C.blue50  },
+      { key: "saved",      label: "Saved PGs",        path: "/home/saved"        },
     ],
   },
   {
-    section: "Owner",
+    label: "Owner",
     items: [
-      { label: "Add Listing",      path: "/home/listings/new", icon: "plus" },
-      { label: "My Listings",      path: "/home/listings",     icon: "building", badge: { text: "2 pending", type: "warn" } },
-      { label: "Booking Requests", path: "/home/requests",     icon: "calendar", badge: { text: "5", type: "blue" } },
-    ],
-  },
-  {
-    section: "Account",
-    items: [
-      { label: "Profile",  path: "/home/profile",  icon: "user"   },
-      { label: "Messages", path: "/home/messages", icon: "chat",  badge: { text: "2", type: "blue" } },
-      { label: "Reviews",  path: "/home/reviews",  icon: "shield" },
+      { key: "addlisting", label: "Add Listing",      path: "/home/listings/new"                          },
+      { key: "mylisting",  label: "My Listings",      path: "/home/listings",    badge: "5",    bc: "#92400e", bb: "#fef3c7" },
+      { key: "requests",   label: "Booking Requests", path: "/home/requests",    badge: "2",    bc: C.red600,  bb: C.red100  },
     ],
   },
 ];
 
-const BOTTOM = [
-  { label: "Help & Support", path: "/help",     icon: "support"  },
-  { label: "Settings",       path: "/settings", icon: "settings" },
+const BOTTOM_ITEMS = [
+  { key: "profile",  label: "Profile",        path: "/home/profile"  },
+  { key: "messages", label: "Messages",       path: "/home/messages", badge: "2", bc: C.blue600, bb: C.blue50 },
+  { key: "reviews",  label: "Reviews",        path: "/home/reviews"  },
+  { key: "help",     label: "Help & Support", path: "/home/help"     },
+  { key: "settings", label: "Settings",       path: "/home/settings" },
 ];
 
-const Icon = ({ name }) => {
-  const icons = {
-    grid:     <><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></>,
-    search:   <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
-    home:     <><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></>,
-    heart:    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>,
-    plus:     <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>,
-    building: <><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></>,
-    calendar: <><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>,
-    user:     <><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
-    chat:     <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>,
-    shield:   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>,
-    support:  <><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></>,
-    settings: <><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></>,
-  };
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      {icons[name]}
-    </svg>
-  );
+/* SVG icon map */
+const ICONS = {
+  dashboard:   <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/></svg>,
+  browse:      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.4"/><path d="M11 11l3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>,
+  bookings:    <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M5 3V1M11 3V1M2 7h12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
+  saved:       <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 13s-6-3.5-6-7.5a4 4 0 017-2.6A4 4 0 0114 5.5c0 4-6 7.5-6 7.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>,
+  addlisting:  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M8 5v6M5 8h6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>,
+  mylisting:   <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8l6-5 6 5v6h-4v-3H6v3H2V8z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>,
+  requests:    <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M11 14v-2a3 3 0 00-3-3H5a3 3 0 00-3 3v2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/><circle cx="7" cy="6" r="3" stroke="currentColor" strokeWidth="1.4"/><path d="M13 5v4M15 7h-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>,
+  profile:     <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.4"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>,
+  messages:    <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M14 10a2 2 0 01-2 2H5l-3 3V3a2 2 0 012-2h8a2 2 0 012 2v7z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>,
+  reviews:     <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.4.6 3.5L8 10l-3.1 1.4.6-3.5L3 5.5 6.5 5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg>,
+  help:        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M6 6a2 2 0 114 0c0 1.3-2 2-2 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="8" cy="12" r=".6" fill="currentColor"/></svg>,
+  settings:    <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>,
 };
 
-const Badge = ({ badge }) => {
-  const colors = {
-    blue:  { background: "#1c4ed8", color: "#fff" },
-    green: { background: "#d1fae5", color: "#065f46" },
-    warn:  { background: "#fef3c7", color: "#92400e" },
-  };
+function NavItem({ item, active }) {
+  const navigate = useNavigate();
   return (
-    <span style={{ ...styles.badge, ...colors[badge.type] }}>
-      {badge.text}
-    </span>
+    <button
+      style={{
+        ...S.item,
+        ...(active ? S.itemActive : {}),
+      }}
+      className={active ? "" : "pg-nav-item"}
+      onClick={() => navigate(item.path)}
+    >
+      {active && <span style={S.bar} />}
+      <span style={{ ...S.iconBox, ...(active ? S.iconBoxActive : {}) }}>
+        {ICONS[item.key]}
+      </span>
+      <span style={S.label}>{item.label}</span>
+      {item.badge && (
+        <span style={{ ...S.badge, background: item.bb || C.blue50, color: item.bc || C.blue600 }}>
+          {item.badge}
+        </span>
+      )}
+    </button>
   );
-};
+}
 
-const SideBar = () => (
-  <aside style={styles.sidebar}>
-    <div style={styles.scrollArea}>
-      {NAV.map((group) => (
-        <div key={group.section}>
-          <div style={styles.section}>{group.section}</div>
-          {group.items.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              style={({ isActive }) => ({
-                ...styles.item,
-                ...(isActive ? styles.itemActive : {}),
-              })}
-            >
-              {({ isActive }) => (
-                <>
-                  <span style={{ ...styles.icon, color: isActive ? "#1c4ed8" : "#6b7280" }}>
-                    <Icon name={item.icon} />
-                  </span>
-                  {item.label}
-                  {item.badge && <Badge badge={item.badge} />}
-                </>
-              )}
-            </NavLink>
-          ))}
-          <div style={styles.divider} />
+const Sidebar = () => {
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
+
+  return (
+    <aside style={S.sidebar}>
+      {SECTIONS.map(({ label, items }) => (
+        <div key={label}>
+          <p style={S.sectionLabel}>{label}</p>
+          {items.map(item => <NavItem key={item.key} item={item} active={isActive(item.path)} />)}
         </div>
       ))}
-    </div>
 
-    <div style={styles.bottom}>
-      {BOTTOM.map((item) => (
-        <NavLink key={item.path} to={item.path} style={styles.bottomItem}>
-          <span style={styles.bottomIcon}><Icon name={item.icon} /></span>
-          {item.label}
-        </NavLink>
-      ))}
-    </div>
-  </aside>
-);
+      <div style={S.sep} />
 
-const styles = {
-  sidebar: {
-    width: "228px", minWidth: "228px", background: "#ffffff",
-    borderRight: "1px solid #e8eaed", display: "flex",
-    flexDirection: "column", height: "calc(100vh - 64px)",
-    position: "sticky", top: "64px", fontFamily: "'Plus Jakarta Sans', sans-serif",
-  },
-  scrollArea: { flex: 1, overflowY: "auto", padding: "8px 0 4px" },
-  section: {
-    padding: "10px 22px 4px", fontSize: "10.5px", fontWeight: 600,
-    color: "#9ca3af", letterSpacing: "0.7px", textTransform: "uppercase",
-  },
-  item: {
-    display: "flex", alignItems: "center", gap: "10px",
-    padding: "9px 14px", margin: "1px 8px", borderRadius: "9px",
-    fontSize: "13px", fontWeight: 500, color: "#374151",
-    textDecoration: "none", transition: "background 0.15s",
-  },
-  itemActive: { background: "#eff4ff", color: "#1c4ed8" },
-  icon: { display: "flex", alignItems: "center", flexShrink: 0 },
-  badge: {
-    marginLeft: "auto", fontSize: "10px", fontWeight: 600,
-    padding: "1px 7px", borderRadius: "99px", lineHeight: "16px",
-    whiteSpace: "nowrap",
-  },
-  divider: { height: "1px", background: "#f3f4f6", margin: "6px 12px" },
-  bottom: { padding: "8px 8px 14px", borderTop: "1px solid #f3f4f6" },
-  bottomItem: {
-    display: "flex", alignItems: "center", gap: "10px", padding: "9px 14px",
-    borderRadius: "9px", fontSize: "13px", fontWeight: 500,
-    color: "#6b7280", textDecoration: "none",
-  },
-  bottomIcon: { display: "flex", color: "#9ca3af" },
+      <div>
+        <p style={S.sectionLabel}>Account</p>
+        {BOTTOM_ITEMS.map(item => <NavItem key={item.key} item={item} active={isActive(item.path)} />)}
+      </div>
+    </aside>
+  );
 };
 
-export default SideBar;
+const S = {
+  sidebar: {
+    width: 210, background: C.white,
+    borderRight: `1px solid ${C.gray200}`,
+    display: "flex", flexDirection: "column",
+    padding: "10px 8px", flexShrink: 0,
+    overflowY: "auto", fontFamily: FONT,
+  },
+  sectionLabel: {
+    fontSize: 10, fontWeight: 700, letterSpacing: "0.08em",
+    textTransform: "uppercase", color: C.gray400,
+    padding: "0 10px", margin: "10px 0 3px",
+  },
+  item: {
+    display: "flex", alignItems: "center", gap: 8,
+    padding: "7px 10px", borderRadius: 8,
+    color: C.gray600, fontSize: 12.5, fontWeight: 500,
+    cursor: "pointer", border: "none", background: "none",
+    width: "100%", textAlign: "left", position: "relative",
+    fontFamily: FONT, transition: "background 0.12s",
+  },
+  itemActive: { background: C.blue50, color: C.blue600 },
+  bar:  { position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)", width: 3, height: 16, borderRadius: "0 3px 3px 0", background: C.blue600 },
+  iconBox: { width: 26, height: 26, borderRadius: 7, background: C.gray100, display: "flex", alignItems: "center", justifyContent: "center", color: C.gray600, flexShrink: 0 },
+  iconBoxActive: { background: C.blue100, color: C.blue600 },
+  label: { flex: 1 },
+  badge: { fontSize: 10, fontWeight: 700, padding: "1px 7px", borderRadius: 20 },
+  sep:   { height: 1, background: C.gray100, margin: "6px 0" },
+};
+
+export default Sidebar;

@@ -1,164 +1,150 @@
-import { useContext } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { C, FONT } from "../theme";
 
-const NavBar = () => {
-  const { user, logout } = useContext(AuthContext);
+const Navbar = () => {
+  const { user, logout }  = useContext(AuthContext);
+  const [open, setOpen]   = useState(false);
+  const ref               = useRef(null);
 
-  const initials = user?.name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2) ?? "?";
-  const formatRole = (role) => {
-    if (!role) return "User";
-    return role
-      .replace("ROLE_", "")           
-      .charAt(0).toUpperCase()         
-      + role.replace("ROLE_", "").slice(1).toLowerCase(); 
-  };
+  useEffect(() => {
+    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  const initials   = user?.name?.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) ?? "?";
+  const formatRole = (r) => r ? r.replace("ROLE_", "").replace(/^\w/, c => c.toUpperCase()).toLowerCase().replace(/^\w/, c => c.toUpperCase()) : "User";
 
   return (
-    <nav style={styles.nav}>
-      <div style={styles.logoIcon}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-          stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
-          <path d="M9 21V12h6v9"/>
-        </svg>
-      </div>
-      <span style={styles.logoText}>
-        PG<span style={{ color: "#1c4ed8" }}>Rentals</span>
-      </span>
+    <>
+      <style>{`
+        .nb-search:focus { border-color: ${C.blue500} !important; outline: none; box-shadow: 0 0 0 3px rgba(37,84,224,0.1); }
+        .nb-search::placeholder { color: ${C.gray400}; font-size: 13px; }
+        .nb-icon:hover { background: ${C.gray100} !important; }
+        .nb-chip:hover { border-color: ${C.gray300} !important; }
+        .nb-dd-item:hover { background: ${C.gray100}; }
+        .nb-logout:hover { background: #fee2e2 !important; }
+      `}</style>
 
-      <div style={styles.searchWrapper}>
-        <span style={styles.searchIcon}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </span>
-        <input
-          type="text"
-          placeholder="Search PGs, rooms, locations..."
-          style={styles.searchInput}
-          onFocus={(e) => { e.target.style.borderColor = "#1c4ed8"; e.target.style.background = "#fff"; }}
-          onBlur={(e)  => { e.target.style.borderColor = "#e5e7eb"; e.target.style.background = "#f9fafb"; }}
-        />
-        <span style={styles.kbdHint}>⌘K</span>
-      </div>
-
-      <div style={styles.rightSide}>
-        <button style={styles.iconBtn} title="Notifications">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 01-3.46 0"/>
-          </svg>
-          <span style={styles.notifDot} />
-        </button>
-
-        <button style={styles.iconBtn} title="Messages">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-          </svg>
-        </button>
-
-        <div style={styles.divider} />
-
-        <div style={styles.userChip}>
-          <div style={styles.userInfo}>
-            <div style={styles.userName}>{user?.name ?? "User"}</div>
-            <div style={styles.userRole}>{formatRole(user?.role)}</div>
+      <nav style={S.nav}>
+        {/* Logo */}
+        <Link to="/home/dashboard" style={S.logo}>
+          <div style={S.logoIcon}>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+              <path d="M2 8l6-5 6 5v6h-4v-3H6v3H2V8z" stroke="#fff" strokeWidth="1.7" strokeLinejoin="round" />
+            </svg>
           </div>
-          <div style={styles.avatar}>{initials}</div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-            stroke="#9ca3af" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
+          <span style={S.logoText}>PG<span style={{ color: C.gray500, fontWeight: 500 }}>Rentals</span></span>
+        </Link>
+
+        {/* Search */}
+        <div style={S.searchWrap}>
+          <span style={S.searchIcon}>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M11 11l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </span>
+          <input className="nb-search" type="text" placeholder="Search PGs, rooms, locations..." style={S.search} />
+          <span style={S.searchKbd}>⌘K</span>
         </div>
 
-        <button style={styles.logoutBtn} onClick={logout}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Logout
-        </button>
-      </div>
-    </nav>
+        {/* Right */}
+        <div style={S.right}>
+          {/* Bell */}
+          <button className="nb-icon" style={S.iconBtn}>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2a5 5 0 00-5 5c0 5.5-2 6.5-2 6.5h14s-2-1-2-6.5a5 5 0 00-5-5z" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M9.7 13a2 2 0 01-3.4 0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            <span style={S.dot} />
+          </button>
+
+          {/* Message */}
+          <button className="nb-icon" style={S.iconBtn}>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+              <path d="M14 10a2 2 0 01-2 2H5l-3 3V3a2 2 0 012-2h8a2 2 0 012 2v7z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+            </svg>
+          </button>
+
+          <div style={S.divider} />
+
+          {/* User chip + dropdown */}
+          <div ref={ref} style={{ position: "relative" }}>
+            <div className="nb-chip" style={S.chip} onClick={() => setOpen(o => !o)}>
+              <div style={S.avatar}>{initials}</div>
+              <div>
+                <div style={S.uName}>{user?.name ?? "User"}</div>
+                <div style={S.uRole}>{formatRole(user?.role)}</div>
+              </div>
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                <path d="M2 4l4 4 4-4" stroke={C.gray400} strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </div>
+
+            {open && (
+              <div style={S.dropdown}>
+                <div style={S.ddHeader}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: C.gray900 }}>{user?.name}</div>
+                  <div style={{ fontSize: 11, color: C.gray500, marginTop: 1 }}>{user?.email}</div>
+                </div>
+                {[["Profile", "/home/profile"], ["Settings", "/home/settings"]].map(([l, p]) => (
+                  <Link key={p} to={p} style={{ textDecoration: "none" }} onClick={() => setOpen(false)}>
+                    <div className="nb-dd-item" style={S.ddItem}>{l}</div>
+                  </Link>
+                ))}
+                <div style={{ height: 1, background: C.gray100, margin: "4px 0" }} />
+                <div className="nb-dd-item" style={{ ...S.ddItem, color: C.red600 }}
+                  onClick={() => { logout(); setOpen(false); }}>
+                  Log out
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Logout btn */}
+          <button className="nb-logout" style={S.logoutBtn} onClick={logout}>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+              <path d="M6 14H3a1 1 0 01-1-1V3a1 1 0 011-1h3M10 11l3-3-3-3M13 8H6"
+                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </nav>
+    </>
   );
 };
 
-const styles = {
+const S = {
   nav: {
-    background: "#ffffff", borderBottom: "1px solid #e8eaed",
-    height: "64px", display: "flex", alignItems: "center",
-    padding: "0 28px", gap: "20px", position: "sticky",
-    top: 0, zIndex: 1000, fontFamily: "'Plus Jakarta Sans', sans-serif",
+    height: 56, background: C.white,
+    borderBottom: `1px solid ${C.gray200}`,
+    display: "flex", alignItems: "center",
+    padding: "0 20px", gap: 14, flexShrink: 0,
+    fontFamily: FONT, zIndex: 10,
   },
-  logoIcon: {
-    width: "36px", height: "36px", borderRadius: "10px", background: "#1c4ed8",
-    display: "flex", alignItems: "center", justifyContent: "center",
-  },
-  logoText: {
-    fontFamily: "'Sora', sans-serif",
-    fontSize: "17px", fontWeight: 600, color: "#111827", letterSpacing: "-0.3px",
-  },
-  searchWrapper: { flex: 1, maxWidth: "440px", margin: "0 auto", position: "relative" },
-  searchIcon: {
-    position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)",
-    color: "#9ca3af", display: "flex", alignItems: "center", pointerEvents: "none",
-  },
-  searchInput: {
-    width: "100%", height: "40px", border: "1.5px solid #e5e7eb", borderRadius: "10px",
-    padding: "0 48px 0 40px", fontFamily: "'Plus Jakarta Sans', sans-serif",
-    fontSize: "13.5px", color: "#111827", background: "#f9fafb", outline: "none",
-  },
-  kbdHint: {
-    position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
-    fontSize: "11px", color: "#9ca3af", background: "#f3f4f6",
-    border: "1px solid #e5e7eb", borderRadius: "4px", padding: "2px 6px", pointerEvents: "none",
-  },
-  rightSide: { display: "flex", alignItems: "center", gap: "6px", marginLeft: "auto", flexShrink: 0 },
-  iconBtn: {
-    width: "38px", height: "38px", borderRadius: "10px",
-    border: "1.5px solid #e5e7eb", background: "#fff",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    cursor: "pointer", color: "#6b7280", position: "relative",
-  },
-  notifDot: {
-    position: "absolute", top: "7px", right: "7px",
-    width: "7px", height: "7px", background: "#ef4444",
-    borderRadius: "50%", border: "2px solid #fff",
-  },
-  divider: { width: "1px", height: "28px", background: "#e5e7eb", margin: "0 6px" },
-  userChip: {
-    display: "flex", alignItems: "center", gap: "10px",
-    padding: "5px 5px 5px 10px", border: "1.5px solid #e5e7eb",
-    borderRadius: "12px", background: "#fff", cursor: "pointer",
-  },
-  userInfo: { textAlign: "left" },
-  userName: { fontSize: "13px", fontWeight: 600, color: "#111827", lineHeight: 1.3 },
-  userRole: { fontSize: "11px", color: "#6b7280" },
-  avatar: {
-    width: "32px", height: "32px", borderRadius: "8px", background: "#1c4ed8",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    fontSize: "12px", fontWeight: 600, color: "#fff",
-    fontFamily: "'Sora', sans-serif", flexShrink: 0,
-  },
-  logoutBtn: {
-    display: "flex", alignItems: "center", gap: "7px",
-    padding: "0 16px", height: "38px", borderRadius: "10px",
-    border: "1.5px solid #fecaca", background: "#fff5f5",
-    color: "#dc2626", fontFamily: "'Plus Jakarta Sans', sans-serif",
-    fontSize: "13px", fontWeight: 600, cursor: "pointer",
-  },
+  logo:     { display: "flex", alignItems: "center", gap: 8, textDecoration: "none", flexShrink: 0 },
+  logoIcon: { width: 30, height: 30, borderRadius: 8, background: C.blue600, display: "flex", alignItems: "center", justifyContent: "center" },
+  logoText: { fontFamily: FONT, fontSize: 15, fontWeight: 700, color: C.gray900 },
+  searchWrap: { flex: 1, maxWidth: 380, position: "relative", margin: "0 auto" },
+  searchIcon: { position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: C.gray400, display: "flex", alignItems: "center", pointerEvents: "none" },
+  search: { width: "100%", height: 36, border: `1.5px solid ${C.gray200}`, borderRadius: 9, padding: "0 38px 0 34px", fontFamily: FONT, fontSize: 13, color: C.gray900, background: C.gray50, transition: "border-color 0.15s" },
+  searchKbd: { position: "absolute", right: 9, top: "50%", transform: "translateY(-50%)", fontSize: 10, fontWeight: 600, color: C.gray400, background: C.gray100, padding: "1px 6px", borderRadius: 4, border: `1px solid ${C.gray200}` },
+  right:   { display: "flex", alignItems: "center", gap: 8, marginLeft: "auto", flexShrink: 0 },
+  iconBtn: { width: 32, height: 32, borderRadius: 8, border: `1.5px solid ${C.gray200}`, background: C.white, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: C.gray600, position: "relative", transition: "background 0.12s" },
+  dot:     { position: "absolute", top: 6, right: 6, width: 6, height: 6, background: "#ef4444", borderRadius: "50%", border: `1.5px solid ${C.white}` },
+  divider: { width: 1, height: 22, background: C.gray200, margin: "0 2px" },
+  chip: { display: "flex", alignItems: "center", gap: 8, padding: "4px 8px 4px 5px", border: `1.5px solid ${C.gray200}`, borderRadius: 10, background: C.white, cursor: "pointer", transition: "border-color 0.12s" },
+  avatar: { width: 26, height: 26, borderRadius: 7, background: C.blue600, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "#fff", flexShrink: 0 },
+  uName:  { fontSize: 12, fontWeight: 600, color: C.gray900, lineHeight: 1.3 },
+  uRole:  { fontSize: 10, color: C.gray500 },
+  dropdown: { position: "absolute", top: "calc(100% + 8px)", right: 0, background: C.white, border: `1px solid ${C.gray200}`, borderRadius: 11, padding: 6, minWidth: 190, zIndex: 100, boxShadow: "0 8px 24px rgba(0,0,0,0.1)" },
+  ddHeader: { padding: "8px 10px 10px", borderBottom: `1px solid ${C.gray100}`, marginBottom: 4 },
+  ddItem:   { padding: "7px 10px", borderRadius: 7, fontSize: 13, fontWeight: 500, color: C.gray700, cursor: "pointer", transition: "background 0.1s" },
+  logoutBtn: { display: "flex", alignItems: "center", gap: 5, padding: "0 12px", height: 32, borderRadius: 8, border: `1.5px solid #fecaca`, background: "#fff5f5", color: C.red600, fontFamily: FONT, fontSize: 12, fontWeight: 600, cursor: "pointer", transition: "background 0.12s" },
 };
 
-export default NavBar;
+export default Navbar;

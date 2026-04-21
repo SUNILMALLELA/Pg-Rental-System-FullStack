@@ -25,7 +25,7 @@ public class PgService {
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException("User not found",400));
+                .orElseThrow(() -> new CustomException("User not found", 400));
     }
 
     public PgResponseDTO createPg(PgRequestDTO dto) {
@@ -45,39 +45,42 @@ public class PgService {
     public List<PgResponseDTO> getAllOwnerPgs() {
         User owner = getCurrentUser();
         return pgRepository.findByOwner(owner)
-                .stream().map(this::mapToDTO).toList();
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
     }
 
     public PgResponseDTO updatePg(Long id, PgRequestDTO dto) {
-        User owner = getCurrentUser();
-        Pg pg = pgRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("PG not found"));
-        if (pg.getOwner().getId() != owner.getId()) {
-        throw new CustomException("Not allowed",400);
-         }
-        pg.setTitle(dto.getTitle());
-        pg.setDescription(dto.getDescription());
-        pg.setPrice(dto.getPrice());
-        return mapToDTO(pgRepository.save(pg));
+    User owner = getCurrentUser();
+    Pg pg = pgRepository.findById(id)
+            .orElseThrow(() -> new CustomException("PG not found", 404));
+    if (pg.getOwner().getId() != owner.getId()) {
+        throw new CustomException("You don't own this PG", 403);
     }
+    pg.setTitle(dto.getTitle());
+    pg.setDescription(dto.getDescription());
+    pg.setPrice(dto.getPrice());
+    return mapToDTO(pgRepository.save(pg));
+}
 
-    public String deletePg(Long id) {
-        User owner = getCurrentUser();
-        Pg pg = pgRepository.findById(id)
-                .orElseThrow(() -> new CustomException("PG not found",400));
-
-        if (pg.getOwner().getId() != owner.getId()) {
-        throw new CustomException("Not allowed",400);
-        }
-        pgRepository.delete(pg);
-        return "Deleted";
+public String deletePg(Long id) {
+    User owner = getCurrentUser();
+    Pg pg = pgRepository.findById(id)
+            .orElseThrow(() -> new CustomException("PG not found", 404));
+    if (pg.getOwner().getId() != owner.getId()) {
+        throw new CustomException("You don't own this PG", 403);
     }
+    pgRepository.delete(pg);
+    return "PG deleted successfully";
+}
 
     private PgResponseDTO mapToDTO(Pg pg) {
         return PgResponseDTO.builder()
                 .id(pg.getId())
                 .title(pg.getTitle())
                 .price(pg.getPrice())
+                .description(pg.getDescription())
+                .genderPreference(pg.getGenderPreference().name())
                 .location(pg.getLocation())
                 .ownerName(pg.getOwner().getFullName())
                 .build();
