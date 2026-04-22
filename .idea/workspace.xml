@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6bcb66de-5568-4287-b48f-24563a6ff40b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/controller/PgController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/controller/PgController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Pg.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Pg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/PgService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/PgService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/auth/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/auth/pages/LoginPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/auth/pages/RegisterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/auth/pages/RegisterPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/getPg/getPgService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/getPg/getPgService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/addPg/pages/AddListing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/addPg/pages/AddListing.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/routes/AppRoutes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/routes/AppRoutes.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

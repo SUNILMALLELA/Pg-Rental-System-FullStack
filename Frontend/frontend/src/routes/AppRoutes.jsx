@@ -8,6 +8,8 @@ import EditPg       from "../features/getPg/pages/EditPg";
 import MyBookings   from "../features/myBookings/pages/MyBookings";
 import MainLayout   from "../layouts/MainLayout";
 import PrivateRoute from "./PrivateRoute";
+import BrowsePgs from "../features/browsePg/pages/BrowsePgs";
+import OwnerBookings from "../features/bookingRequests/pages/OwnerBookings";
 
 // Placeholder for unbuilt pages
 const Placeholder = ({ title }) => (
@@ -43,9 +45,9 @@ function AppRoutes() {
         <Route path="listings"       element={<GetListing />} />
         <Route path="edit/:id"       element={<EditPg />} />
         <Route path="bookings"       element={<MyBookings />} />
-        <Route path="browse"         element={<Placeholder title="Browse PGs" />} />
+        <Route path="browse"         element={<BrowsePgs />} />
         <Route path="saved"          element={<Placeholder title="Saved PGs" />} />
-        <Route path="requests"       element={<Placeholder title="Booking Requests" />} />
+        <Route path="requests"       element={<OwnerBookings />} />
         <Route path="messages"       element={<Placeholder title="Messages" />} />
         <Route path="reviews"        element={<Placeholder title="Reviews" />} />
         <Route path="profile"        element={<Placeholder title="Profile" />} />
