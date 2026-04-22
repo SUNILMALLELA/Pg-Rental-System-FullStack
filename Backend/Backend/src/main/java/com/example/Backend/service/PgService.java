@@ -42,14 +42,12 @@ public class PgService {
         return mapToDTO(pgRepository.save(pg));
     }
 
-    public List<PgResponseDTO> getAllOwnerPgs() {
-        User owner = getCurrentUser();
-        return pgRepository.findByOwner(owner)
-                .stream()
-                .map(this::mapToDTO)
-                .toList();
+    public List<PgResponseDTO> getAllPgs() {
+    return pgRepository.findAll()
+            .stream()
+            .map(this::mapToDTO)
+            .toList();
     }
-
     public PgResponseDTO updatePg(Long id, PgRequestDTO dto) {
     User owner = getCurrentUser();
     Pg pg = pgRepository.findById(id)

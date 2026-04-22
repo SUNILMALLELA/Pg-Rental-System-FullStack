@@ -6,20 +6,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Bookings")
 @Builder
-@Table(name = "users")
-public class User {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String fullName;
-    private String email;
-    private String password;
-    private String phoneNumber;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "pg_id")
+    private Pg pg;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private BookingStatus status;
+    private LocalDateTime createdAt;
+
+
 }

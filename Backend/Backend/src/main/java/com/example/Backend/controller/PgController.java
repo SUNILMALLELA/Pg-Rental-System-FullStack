@@ -22,10 +22,10 @@ public class PgController {
         return ResponseEntity.ok(pgservice.createPg(dto));
     }
 
-    @GetMapping("/owner")
-    @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<List<PgResponseDTO>> getAllOwnerPgs(){
-        return ResponseEntity.ok(pgservice.getAllOwnerPgs());
+    @GetMapping
+    @PreAuthorize("hasAnyRole('USER','OWNER')")
+    public ResponseEntity<List<PgResponseDTO>> getAllPgs() {
+    return ResponseEntity.ok(pgservice.getAllPgs());
     }
 
     @PutMapping("/{id}")

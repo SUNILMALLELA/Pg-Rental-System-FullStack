@@ -1,6 +1,6 @@
 import API from "../../services/api";
 export const getPg = ()=>{
-    return API.get("/pgs/owner");
+    return API.get("/pgs");
 }
 export const updatePg = (id,data)=>{
     return API.put(`/pgs/${id}`,data);
