@@ -6,7 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="6bcb66de-5568-4287-b48f-24563a6ff40b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/addPg/pages/AddListing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/addPg/pages/AddListing.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/controller/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/dto/BookingRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/dto/BookingRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/dto/BookingResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/dto/BookingResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/entity/Booking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/repository/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/repository/BookingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Backend/src/main/java/com/example/Backend/service/BookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/bookingRequests/pages/OwnerBookings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/bookingRequests/pages/OwnerBookings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/browsePg/browsePgService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/browsePg/browsePgService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/browsePg/pages/BrowsePgs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/browsePg/pages/BrowsePgs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/dashboard/pages/Dashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/features/myBookings/pages/MyBookings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/features/myBookings/pages/MyBookings.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/frontend/src/routes/AppRoutes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/frontend/src/routes/AppRoutes.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

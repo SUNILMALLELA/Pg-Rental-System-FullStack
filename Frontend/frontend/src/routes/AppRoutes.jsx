@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage    from "../features/auth/pages/LoginPage";
 import RegisterPage from "../features/auth/pages/RegisterPage";
-import Dashboard    from "../features/dashboard/pages/Dashboard";
 import AddListing   from "../features/addPg/pages/AddListing";
 import GetListing   from "../features/getPg/pages/GetListing";
 import EditPg       from "../features/getPg/pages/EditPg";
@@ -10,6 +9,9 @@ import MainLayout   from "../layouts/MainLayout";
 import PrivateRoute from "./PrivateRoute";
 import BrowsePgs from "../features/browsePg/pages/BrowsePgs";
 import OwnerBookings from "../features/bookingRequests/pages/OwnerBookings";
+import ViewPg from "../features/browsePg/pages/ViewPg";
+import UserDashboard from "../features/dashboard/pages/UserDashboard";
+
 
 // Placeholder for unbuilt pages
 const Placeholder = ({ title }) => (
@@ -40,12 +42,13 @@ function AppRoutes() {
         }
       >
         <Route index                 element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard"      element={<Dashboard />} />
+        <Route path="dashboard"      element={< UserDashboard />} />
         <Route path="listings/new"   element={<AddListing />} />
         <Route path="listings"       element={<GetListing />} />
         <Route path="edit/:id"       element={<EditPg />} />
         <Route path="bookings"       element={<MyBookings />} />
         <Route path="browse"         element={<BrowsePgs />} />
+        <Route path ="view/:id"     element= {<ViewPg/>}/>
         <Route path="saved"          element={<Placeholder title="Saved PGs" />} />
         <Route path="requests"       element={<OwnerBookings />} />
         <Route path="messages"       element={<Placeholder title="Messages" />} />

@@ -13,4 +13,6 @@ public class BookingResponseDTO {
     private String ownerName;
     private String status;
     private String bookedAt;
+    private String visitDate;
+    private String note;
 }

@@ -112,7 +112,7 @@ function FilterPill({ label, count, active, dotColor, onClick }) {
 }
 
 // ── booking card ──────────────────────────────────────────────────────────────
-function BookingCard({ booking, index }) {
+function BookingCard({ booking, index, onView }) {
   const [hovered, setHovered] = useState(false);
   const st  = STATUS_CONFIG[booking.status] || STATUS_CONFIG.PENDING;
   const msg = INFO_MSG[booking.status];
@@ -170,7 +170,11 @@ function BookingCard({ booking, index }) {
       </div>
 
       {/* view action */}
-      
+      <div style={{ padding: "14px 16px 14px 0", display: "flex", alignItems: "center", flexShrink: 0 }}>
+        <button onClick={() => onView(booking.pgId)} style={{ ...S.btnOutline, fontSize: 13, padding: "7px 13px", gap: 5 }}>
+          View PG <ArrowIcon />
+        </button>
+      </div>
     </div>
   );
 }
